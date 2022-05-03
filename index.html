@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/3ca0c365cd.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="Main css/normalize.css" />
+    <link rel="stylesheet" href="Main css/main.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Budget App</title>
+  </head>
+  <body>
+    <div class="heading">
+      <div class="container-1">
+        <h2 class="title">Budget App</h2>
+      </div>
+    </div>
+
+    <section class="calculator">
+      <div class="container-4">
+        <div class="my-1">
+          <div class="span grid">
+            <div class="enter-budget">
+              <form class="form-3 budget">
+                <div class="form-info">
+                  <label>Please Enter Your Budget</label>
+                  <input type="text" id="budget" />
+                </div>
+                <input
+                  type="submit"
+                  value="calculate"
+                  class="btn btn-thin btn-primary btn-rounded"
+                />
+              </form>
+
+              <form class="form-3 expense">
+                <div class="form-info">
+                  <label>Please Enter Your Expense</label>
+                  <input type="text" id="expense" />
+                </div>
+
+                <div class="form-info">
+                  <label>Please Enter Expense Amount</label>
+                  <input type="text" id="amount" />
+                </div>
+                <input
+                  type="submit"
+                  value="calculate"
+                  class="btn btn-thin btn-primary btn-rounded"
+                />
+              </form>
+            </div>
+
+            <div class="display">
+              <div class="amounts my-2 py-2 flex">
+                <div class="wallet-in">
+                  <h3 class="top-3">Budget</h3>
+                  <i class="fa-solid fa-wallet fa-3x"></i>
+                  <!-- <h2 class="top wallet-size">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                  </h2> -->
+                </div>
+
+                <div class="wallet-expense">
+                  <h3 class="top-3">Expenses</h3>
+                  <i class="fa-solid fa-credit-card fa-3x"></i>
+                  <!-- <h2 class="top wallet-out">
+                    <i class="fa-solid fa-dollar-sign"></i>20,000
+                  </h2> -->
+                </div>
+
+                <div class="balance-in-wallet">
+                  <h3 class="top-3">Balance</h3>
+                  <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
+                  <!-- <h2 class="top balance">
+                    <i class="fa-solid fa-dollar-sign"></i>50,000
+                  </h2> -->
+                </div>
+              </div>
+
+              <div class="summary my-2 py-2">
+                <table class="table">
+                  <thead class="table-head">
+                    <tr class="table-head-row">
+                      <th class="column-title">Expense</th>
+                      <th class="column-title">value</th>
+                      <th class="column-title"></th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="table-body">
+                    <tr class="table-body-row">
+                      <td class="table-detail"></td>
+                      <td class="table-detail"></td>
+                      <td class="table-detail"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
