@@ -60,6 +60,28 @@
     color: var(--stroke-500);
 }
 
+.rem-edit {
+    text-align: right;
+}
+
+.delete {
+    color: var(--red-400);
+}
+
+.delete:hover {
+    color: var(--red-600);
+}
+
+.edit {
+    color: var(--primary-300);
+}
+
+.edit:hover {
+    color:  var(--primary-500);
+}
+
+
+
 /* Responsiveness */
 @media (max-width: 1200px) {
     .calculator .grid {

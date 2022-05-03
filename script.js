@@ -12,6 +12,13 @@ class Budget {
 }
 
 
+class Expense {
+    constructor(name, amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+}
+
 /*
 ================================================================================================================================
 class UI
@@ -65,11 +72,39 @@ class UI {
     }
 
     static displaySummary() {
+        const storedSummary = [
+            {
+                name: 'Rent',
+                amount: 10000
+            },
+            {
+                name: 'Electricity Bill',
+                amount: 3000
+            },
+            {
+                name: 'Water Bill',
+                amount: 5000
+            }
+        ];
 
+        const tSummary = storedSummary;
+        tSummary.forEach((summary) => UI.addToList(summary));
+    }
+
+    static addToList(summary) {
+        const tableBody = document.querySelector('.table-body');
+        const tr = document.createElement('tr');
+        tr.className = 'table-body-row';
+        tr.innerHTML = `<td class="table-detail">${summary.name}</td>
+                        <td class="table-detail">${summary.amount}</td>
+                        <td class="table-detail rem-edit">
+                        <i class="far fa-edit edit"></i>
+                        <i class="fas fa-trash delete"></i>
+                        </td>`;
+        
+        tableBody.appendChild(tr);
     }
 }
-
-
 
 /*
 ================================================================================================================================
@@ -85,6 +120,11 @@ class Calculator {
 }
 
 
+/*
+================================================================================================================================
+Store Class
+================================================================================================================================
+*/
 
 
 
@@ -94,6 +134,7 @@ Event display content
 ================================================================================================================================
 */
 document.addEventListener('DOMContentLoaded', UI.displayTransactions());
+document.addEventListener('DOMContentLoaded', UI.displaySummary());
 
 
 
