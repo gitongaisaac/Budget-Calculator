@@ -9,11 +9,15 @@ class Budget {
     }
 }
 
+
+
 class Expense {
-    constructor(amount) {
-        this.amount = amount;
+    constructor(expense) {
+        this.expense = expense;
     }
 }
+
+
 
 class ExpenseSummary {
     constructor(name, amount) {
@@ -27,40 +31,12 @@ class ExpenseSummary {
 class UI
 ================================================================================================================================
 */
-const enteredExpense = document.querySelector('.expense');
-
 class UI {
-    static displayBudget() {
-        const storedBudget = [
-            {
-                budget: '50000'
-            }
-        ]
-
-        const tBudget = storedBudget;
-        tBudget.forEach((budget) => UI.addBudget(budget));
-        // tBudget.forEach((budget) => UI.addBalance(budget));
-    }
-
-
-    static displayExpense() {
-        const storedExpense = [
-            {
-                expense: '20000'
-            }
-        ]
-
-        const tExpense = storedExpense;
-        tExpense.forEach((expense) => UI.addExpense(expense));
-        // tExpense.forEach((expense) => UI.addBalance(expense));
-    }
-
-
     static displayTransactions() {
         const storedBudget = [
             {
-                budget: '50000',
-                expense: '20000'
+                budget: '0',
+                expense: '0'
             }
         ];
 
@@ -72,26 +48,26 @@ class UI {
 
 
 
-    static addBudget(budget) {
+    static addBudget(salary) {
         const walletIn = document.querySelector('.wallet-in');
         const h2WalletSize = document.createElement('h2');
             h2WalletSize.className = 'top wallet-size';
             h2WalletSize.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(`${budget.budget}`);
+            const textNode = document.createTextNode(`${salary.budget}`);
 
-            h2WalletSize.appendChild(textNode)
+            h2WalletSize.appendChild(textNode);
             walletIn.appendChild(h2WalletSize);
 
     }
 
 
 
-    static addExpense(expense) {
+    static addExpense(salary) {
         const walletExpense = document.querySelector('.wallet-expense');
             const h2WalletOut = document.createElement('h2');
             h2WalletOut.className = 'top top wallet-out';
             h2WalletOut.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(`${expense.expense}`);
+            const textNode = document.createTextNode(`${salary.expense}`);
 
             h2WalletOut.appendChild(textNode)
             walletExpense.appendChild(h2WalletOut);
@@ -99,12 +75,12 @@ class UI {
 
 
 
-    static addBalance(budget, expense) {
+    static addBalance(salary) {
         const  balanceInWallet = document.querySelector('.balance-in-wallet');
         const h2BalanceAtDisplay = document.createElement('h2');
             h2BalanceAtDisplay.className = 'top balance';
             h2BalanceAtDisplay.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(`${Calculator.claculate(budget.budget, expense.expense)}`);
+            const textNode = document.createTextNode(`${Calculator.claculate(salary.budget, salary.expense)}`);
 
             h2BalanceAtDisplay.appendChild(textNode)
             balanceInWallet.appendChild(h2BalanceAtDisplay);
@@ -176,9 +152,7 @@ Store Class
 Event display content
 ================================================================================================================================
 */
-// document.addEventListener('DOMContentLoaded', UI.displayTransactions());
-document.addEventListener('DOMContentLoaded', UI.displayBudget());
-document.addEventListener('DOMContentLoaded', UI.displayExpense());
+document.addEventListener('DOMContentLoaded', UI.displayTransactions());
 document.addEventListener('DOMContentLoaded', UI.displaySummary());
 
 
@@ -192,19 +166,7 @@ const enteredBudget = document.querySelector('.budget')
 enteredBudget.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // const budget = document.getElementById('budget').value;
-    const budgetValue = document.getElementById('budget').value;
-    const budget = new Budget(budgetValue);
-    
-    UI.addBudget(budget)
-    Calculator.claculate(budgetValue);
-
-    return budgetValue;
-    
-    // UI.displayTransactions(budget)
-    // Calculator.claculate(budget);
-
-    // return budget;
+    const budget = document.getElementById('budget').value;    
 });
 
 
@@ -214,25 +176,17 @@ enteredBudget.addEventListener('submit', (e) => {
 Event get expense
 ================================================================================================================================
 */
-// const enteredExpense = document.querySelector('.expense');
+const enteredExpense = document.querySelector('.expense');
 enteredExpense.addEventListener('submit', (e) => {
     e.preventDefault();
 
     
 
     const name = document.getElementById('expense').value;
-    const amountValue = document.getElementById('amount').value;
-    // const amount = document.getElementById('amount').value;
+    const amount = document.getElementById('amount').value;
 
-    const amount = new Expense(amountValue);
-    UI.addExpense(amount);
-    Calculator.claculate(amountValue);
+    UI.add
 
-
-    const summary = new ExpenseSummary(name, amountValue);
-    UI.addToList(summary)
-    
-    return amountValue;
-    
-    // return amount;
+    const summary = new ExpenseSummary(name, amount);
+    UI.addToList(summary)    
 });
