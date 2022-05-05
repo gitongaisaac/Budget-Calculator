@@ -92,5 +92,9 @@
     .span {
         text-align: center;
     }
+
+    .calculator .grid {
+        gap: 1rem;
+    }
 }
 
