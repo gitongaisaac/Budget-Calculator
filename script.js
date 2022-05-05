@@ -39,7 +39,7 @@ class UI {
 
         const tBudget = storedBudget;
         tBudget.forEach((budget) => UI.addBudget(budget));
-        tBudget.forEach((budget) => UI.addBalance(budget));
+        // tBudget.forEach((budget) => UI.addBalance(budget));
     }
 
 
@@ -51,24 +51,24 @@ class UI {
         ]
 
         const tExpense = storedExpense;
-        tExpense.forEach((expense) => UI.addexpense(expense));
-        tExpense.forEach((expense) => UI.addBalance(expense));
+        tExpense.forEach((expense) => UI.addExpense(expense));
+        // tExpense.forEach((expense) => UI.addBalance(expense));
     }
 
 
-    // static displayTransactions() {
-    //     const storedBudget = [
-    //         {
-    //             budget: '50000',
-    //             expense: '20000'
-    //         }
-    //     ];
+    static displayTransactions() {
+        const storedBudget = [
+            {
+                budget: '50000',
+                expense: '20000'
+            }
+        ];
 
-    //     const tSalary = storedBudget;
-    //     tSalary.forEach((salary) => UI.addBudget(salary));
-    //     tSalary.forEach((salary) => UI.addExpense(salary));
-    //     tSalary.forEach((salary) => UI.addBalance(salary))
-    // }
+        const tSalary = storedBudget;
+        tSalary.forEach((salary) => UI.addBudget(salary));
+        tSalary.forEach((salary) => UI.addExpense(salary));
+        tSalary.forEach((salary) => UI.addBalance(salary))
+    }
 
 
 
