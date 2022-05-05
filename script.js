@@ -35,10 +35,11 @@ class UI {
     static displayTransactions() {
         const storedBudget = [
             {
-                budget: '0',
-                expense: '0'
+                budget: 50000,
+                expense: 20000
             }
         ];
+    
 
         const tSalary = storedBudget;
         tSalary.forEach((salary) => UI.addBudget(salary));
@@ -167,6 +168,10 @@ enteredBudget.addEventListener('submit', (e) => {
     e.preventDefault();
     
     const budget = document.getElementById('budget').value;    
+
+    UI.addBudget(budget);
+    UI.displayTransactions(budget)
+
 });
 
 
@@ -185,7 +190,8 @@ enteredExpense.addEventListener('submit', (e) => {
     const name = document.getElementById('expense').value;
     const amount = document.getElementById('amount').value;
 
-    UI.add
+    UI.displayTransactions(amount);
+    UI.addExpense(amount);
 
     const summary = new ExpenseSummary(name, amount);
     UI.addToList(summary)    
