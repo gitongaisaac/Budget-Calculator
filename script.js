@@ -9,13 +9,13 @@ class Budget {
     }
 }
 
-class Amount {
+class Expense {
     constructor(amount) {
         this.amount = amount;
     }
 }
 
-class Expense {
+class ExpenseSummary {
     constructor(name, amount) {
         this.name = name;
         this.amount = amount;
@@ -50,7 +50,7 @@ class UI {
             }
         ]
 
-        const tExpense = storedBudget;
+        const tExpense = storedExpense;
         tExpense.forEach((expense) => UI.addexpense(expense));
         tExpense.forEach((expense) => UI.addBalance(expense));
     }
@@ -196,10 +196,10 @@ enteredBudget.addEventListener('submit', (e) => {
     const budgetValue = document.getElementById('budget').value;
     const budget = new Budget(budgetValue);
     
-    UI.displayBudget(budget)
+    UI.addBudget(budget)
     Calculator.claculate(budgetValue);
 
-    // return budgetValue;
+    return budgetValue;
     
     // UI.displayTransactions(budget)
     // Calculator.claculate(budget);
@@ -221,14 +221,18 @@ enteredExpense.addEventListener('submit', (e) => {
     
 
     const name = document.getElementById('expense').value;
-    const amount = document.getElementById('amount').value;
+    const amountValue = document.getElementById('amount').value;
+    // const amount = document.getElementById('amount').value;
 
+    const amount = new Expense(amountValue);
     UI.addExpense(amount);
-    UI.displayTransactions(amount);
-    Calculator.claculate(amount);
+    Calculator.claculate(amountValue);
 
-    const summary = new Expense(name, amount);
+
+    const summary = new ExpenseSummary(name, amountValue);
     UI.addToList(summary)
     
-    return amount;
+    return amountValue;
+    
+    // return amount;
 });
