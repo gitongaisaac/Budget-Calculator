@@ -39,7 +39,7 @@ class UI {
 
         const tBudget = storedBudget;
         tBudget.forEach((budget) => UI.addBudget(budget));
-        tBudget.forEach((budget) => UI.addBalance(budget));
+        // tBudget.forEach((budget) => UI.addBalance(budget));
     }
 
 
@@ -52,7 +52,7 @@ class UI {
 
         const tExpense = storedExpense;
         tExpense.forEach((expense) => UI.addexpense(expense));
-        tExpense.forEach((expense) => UI.addBalance(expense));
+        // tExpense.forEach((expense) => UI.addBalance(expense));
     }
 
 
