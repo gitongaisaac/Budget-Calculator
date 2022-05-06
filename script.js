@@ -32,6 +32,11 @@ class UI
 ================================================================================================================================
 */
 class UI {
+    static displayBudget() {
+        
+    }
+
+    
     static displayTransactions() {
         const storedBudget = [
             {
@@ -58,7 +63,6 @@ class UI {
 
             h2WalletSize.appendChild(textNode);
             walletIn.appendChild(h2WalletSize);
-
     }
 
 
