@@ -4,8 +4,8 @@ Expense Summary Constructor
 ================================================================================================================================
 */
 class Summary {
-    constructor(expense, amount) {
-        this.expense = expense;        
+    constructor(name, amount) {
+        this.name = name;        
         this.amount = amount;
     }
 }
@@ -17,64 +17,52 @@ UI Class
 ================================================================================================================================
 */
 class UI {
-    static addBudget(budget) {
-        // let budget = 0;
-        const walletIn = document.querySelector('.wallet-in');
-        const h2WalletSize = document.createElement('h2');
-            h2WalletSize.className = 'top wallet-size';
-            h2WalletSize.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(budget);
-
-            h2WalletSize.appendChild(textNode);
-            walletIn.appendChild(h2WalletSize);
-    }
-
-
-
-    static addExpense(expense) {
-        const walletExpense = document.querySelector('.wallet-expense');
-            const h2WalletOut = document.createElement('h2');
-            h2WalletOut.className = 'top top wallet-out';
-            h2WalletOut.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(`${expense}`);
-
-            h2WalletOut.appendChild(textNode)
-            walletExpense.appendChild(h2WalletOut);
-    }
-
-
-
-    static addBalance(budget, expense) {
-        const  balanceInWallet = document.querySelector('.balance-in-wallet');
-        const h2BalanceAtDisplay = document.createElement('h2');
-            h2BalanceAtDisplay.className = 'top balance';
-            h2BalanceAtDisplay.innerHTML = '<i class="fa-solid fa-dollar-sign"></i>';
-            const textNode = document.createTextNode(`${Calculator.claculate(budget, expense)}`);
-
-            h2BalanceAtDisplay.appendChild(textNode)
-            balanceInWallet.appendChild(h2BalanceAtDisplay);
-    }
-
-
-
     static displaySummary() {
         const storedSummary = [
-            {
-                name: 'Rent',
-                amount: 10000
-            },
-            {
-                name: 'Electricity Bill',
-                amount: 3000
-            },
-            {
-                name: 'Water Bill',
-                amount: 5000
-            }
+            // {
+            //     name: 'Rent',
+            //     amount: 10000
+            // },
+            // {
+            //     name: 'Electricity Bill',
+            //     amount: 3000
+            // },
+            // {
+            //     name: 'Water Bill',
+            //     amount: 5000
+            // }
         ];
 
         const tSummary = storedSummary;
         tSummary.forEach((summary) => UI.addToList(summary));
+
+        const totalAmount = tSummary.reduce((total, summary) => total + summary.amount, 0);
+        // const totalAmount = tSummary.reduce((total, summary) => total + summary.amount, 0);
+
+        // UI.addExpense(totalAmount)
+        UI.addBalance(totalAmount);
+    }
+
+
+
+    static addBudget(budget = 0) {
+        const walletSize = document.querySelector('.wallet-size');
+            walletSize.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${budget}`;
+            
+    }
+
+
+
+    static addExpense(totalAmount = 0) {
+            const walletOut = document.querySelector('.wallet-out');
+            walletOut.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${totalAmount}`;
+    }
+
+
+
+    static addBalance(budget, total = 0) {
+        const walletBalance = document.querySelector('.balance');
+            walletBalance.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${Calculator.claculate(budget, total)}`;
     }
 
 
@@ -91,8 +79,32 @@ class UI {
                         </td>`;
         
         tableBody.appendChild(tr);
+        const tableDetail = document.querySelector('.table-detail');
+        return tableDetail;
+    }
+
+
+
+    static alerts(message, type) {
+        const enterBudget = document.querySelector('.enter-budget');
+        const form = document.querySelector('.budget');
+
+        const div = document.createElement('div');
+        div.innerHTML = `<p class="alert alert-${type}">${message}</p>`;
+
+        enterBudget.insertBefore(div, form);
+        setTimeout(() => document.querySelector('.alert').remove(), (3000));
+    }
+
+
+
+    static clearFields() {
+        document.getElementById('budget').value = '';
+        document.getElementById('expense').value = '';
+        document.getElementById('amount').value = '';
     }
 }
+
 
 
 /*
@@ -101,50 +113,23 @@ claculator class
 ================================================================================================================================
 */
 class Calculator {
-    static claculate(tBudget, tExpense) {
-        // let tExpense = '';
-        const balance = tBudget - tExpense;
-
-        return balance;
+    static claculate(budget, totalAmount) {
+        const totalExpense = budget - totalAmount;
+        return totalExpense;
+        
     }
 }
-
 
 /*
 ================================================================================================================================
 Function Listeners
 ================================================================================================================================
 */
-function listeners() {
-    const budgetForm = document.querySelector('.budget');
-    const expenseForm = document.querySelector('.expense');
-    
-// Budget Listener
-    budgetForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        let budget = document.getElementById('budget').value;
-
-        UI.addBudget(budget);
-        // UI.addBalance(budget)
-    });
-
-
-// Expense Listener
-    expenseForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('expense').value;
-        const amount = document.getElementById('amount').value;
-
-        UI.addExpense(amount);
-        // UI.addBalance(expense)
-
-        const summary = new Summary(name, amount);
-        UI.addToList(summary);
-    });
-    
+function listeners() {    
     UI.displaySummary();
+    UI.addBudget();
+    UI.addExpense();
+    // UI.addBalance();
 }
 
 
@@ -162,9 +147,40 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
 /*
 ================================================================================================================================
-Event Get Buget Value
+Listeners
 ================================================================================================================================
 */
+const budgetForm = document.querySelector('.budget');
+const expenseForm = document.querySelector('.expense');
+
+/* =========== Budget Listener =============== */
+budgetForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    let budget = document.getElementById('budget').value;
+
+    UI.addBudget(budget);
+    UI.clearFields();
+    UI.addBalance(budget);
+
+});
+
+
+/* =========== Expense Listener =============== */
+expenseForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('expense').value;
+    const amount = document.getElementById('amount').value;
+
+    UI.addExpense(amount);
+    UI.clearFields();
+
+    const summary = new Summary(name, amount);
+    const tSummary = new Summary(name, amount);
+    UI.displaySummary(tSummary);
+    UI.addToList(summary);
+});
 
 
 

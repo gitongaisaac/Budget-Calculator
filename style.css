@@ -66,6 +66,7 @@
 
 .delete {
     color: var(--red-400);
+    /* cursor: pointer; */
 }
 
 .delete:hover {
@@ -74,10 +75,15 @@
 
 .edit {
     color: var(--primary-300);
+    /* cursor: pointer; */
 }
 
 .edit:hover {
     color:  var(--primary-500);
+}
+
+.alert {
+    text-align: left;
 }
 
 
