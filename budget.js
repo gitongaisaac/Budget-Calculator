@@ -18,28 +18,28 @@ UI Class
 */
 class UI {
     static displaySummary() {
-        const storedSummary = [
-            // {
-            //     name: 'Rent',
-            //     amount: 10000
-            // },
-            // {
-            //     name: 'Electricity Bill',
-            //     amount: 3000
-            // },
-            // {
-            //     name: 'Water Bill',
-            //     amount: 5000
-            // }
-        ];
+        // const storedSummary = [
+        //     {
+        //         name: 'Rent',
+        //         amount: 10000
+        //     },
+        //     {
+        //         name: 'Electricity Bill',
+        //         amount: 3000
+        //     },
+        //     {
+        //         name: 'Water Bill',
+        //         amount: 5000
+        //     }
+        // ];
 
-        const tSummary = storedSummary;
-        tSummary.forEach((summary) => UI.addToList(summary));
-
+        const tSummary = Store.getExpense();
+        // const tSummary = storedSummary;
+        tSummary.forEach(summary => UI.addToList(summary))
         const totalAmount = tSummary.reduce((total, summary) => total + summary.amount, 0);
-        // const totalAmount = tSummary.reduce((total, summary) => total + summary.amount, 0);
-
-        // UI.addExpense(totalAmount)
+        
+        console.log(totalAmount);
+        UI.addExpense(totalAmount);
         UI.addBalance(totalAmount);
     }
 
@@ -56,13 +56,15 @@ class UI {
     static addExpense(totalAmount = 0) {
             const walletOut = document.querySelector('.wallet-out');
             walletOut.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${totalAmount}`;
+            // console.log(totalAmount);
     }
 
 
 
-    static addBalance(budget, total = 0) {
+    static addBalance(totalAmount, budget = 0) {
         const walletBalance = document.querySelector('.balance');
-            walletBalance.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${Calculator.claculate(budget, total)}`;
+            walletBalance.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${Calculator.calculate(budget, totalAmount)}`;
+            // console.log(budget);
     }
 
 
@@ -109,16 +111,54 @@ class UI {
 
 /*
 ================================================================================================================================
+Store Class
+================================================================================================================================
+*/
+class Store {
+    static getExpense() {
+        let tSummary;
+        if(localStorage.getItem('tSummary') === null) {
+            tSummary = [];
+        }
+        else {
+            tSummary = JSON.parse(localStorage.getItem('tSummary'))
+        }
+        return tSummary
+    }
+
+    static setExpense(summary) {
+        const tSummary = Store.getExpense();
+        tSummary.push(summary);
+        localStorage.setItem('tSummary', JSON.stringify(tSummary));
+        // localStorage.setItem('tSummary', tSummary);
+        console.log(tSummary);
+    }
+
+    static deleteExpense() {
+
+    }
+}
+
+
+
+
+/*
+================================================================================================================================
 claculator class
 ================================================================================================================================
 */
 class Calculator {
-    static claculate(budget, totalAmount) {
-        const totalExpense = budget - totalAmount;
+    static calculate(enteredbudget, summedExpense) {
+        const totalExpense = enteredbudget - summedExpense;
         return totalExpense;
-        
+    }
+
+    static totalExpenses(expenses) {
+
     }
 }
+
+
 
 /*
 ================================================================================================================================
@@ -128,8 +168,7 @@ Function Listeners
 function listeners() {    
     UI.displaySummary();
     UI.addBudget();
-    UI.addExpense();
-    // UI.addBalance();
+    // UI.addExpense();
 }
 
 
@@ -160,8 +199,8 @@ budgetForm.addEventListener('submit', (e) => {
     let budget = document.getElementById('budget').value;
 
     UI.addBudget(budget);
-    UI.clearFields();
     UI.addBalance(budget);
+    UI.clearFields();
 
 });
 
@@ -173,71 +212,59 @@ expenseForm.addEventListener('submit', (e) => {
     const name = document.getElementById('expense').value;
     const amount = document.getElementById('amount').value;
 
-    UI.addExpense(amount);
-    UI.clearFields();
+    if(name === '' || amount === '') {
+        UI.alerts('Please fill in all fields', 'error');
+    } 
 
-    const summary = new Summary(name, amount);
-    const tSummary = new Summary(name, amount);
-    UI.displaySummary(tSummary);
-    UI.addToList(summary);
+    else if(amount < 0) {
+        UI.alerts('The amount cannot be less than 0', 'error');
+        UI.clearFields();
+    } 
+
+    else {
+        UI.clearFields();
+    
+        const summary = new Summary(name, amount);
+        const tSummary = new Summary(name, amount);
+        createArray(tSummary);
+
+        UI.addToList(summary);
+
+        Store.setExpense(summary);
+        console.log(localStorage);
+    
+        let expenses = new Summary(name, amount);
+        // Calculator.totalExpenses(expenses);
+        UI.displaySummary(expenses);
+    }
 });
 
 
-
 /*
 ================================================================================================================================
 UI Class
 ================================================================================================================================
 */
 
-
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
-
-
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
+function createArray(tSummary) {
+    const expenseObject = {
+        name: `${tSummary.name}`,
+        amount: `${tSummary.amount}`,
+    }
 
 
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
+    const enteredSummary = [];
 
+    enteredSummary.push(expenseObject);
 
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
+        // console.log(enteredSummary);
 
+        enteredSummary.forEach(summary => console.log(summary));
+        const totalAmount = enteredSummary.reduce((total, summary) => total + summary.amount, 0);
 
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
+        // console.log(totalAmount);
+}
 
-
-
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
-
-
-/*
-================================================================================================================================
-UI Class
-================================================================================================================================
-*/
-
-
+const fruits = ["Banana", "Orange", "Apple"];
+fruits.push("Lemon"); 
+// console.log(fruits);
