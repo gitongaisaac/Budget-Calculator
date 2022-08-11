@@ -1,0 +1,14 @@
+{
+  "expenses": [
+    {
+      "id": 2,
+      "expense": "Mortgage",
+      "amount": 4000
+    },
+    {
+      "id": 1,
+      "expense": "Electricity",
+      "amount": 1000
+    }
+  ]
+}

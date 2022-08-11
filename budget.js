@@ -186,7 +186,7 @@ expenseForm.addEventListener("submit", (e) => {
   const name = document.getElementById("expense").value;
   const amount = document.getElementById("amount").value;
 
-  if (name === "" || amount === "") {
+  if (name === " " || amount === " ") {
     UI.alerts("Please fill in all fields", "error");
   } else if (amount < 0) {
     UI.alerts("The amount cannot be less than 0", "error");

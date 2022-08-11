@@ -16,17 +16,18 @@ UI Class
 ================================================================================================================================
 */
 class UI {
-  static displayExpenses() {
+  static displayExpenses(newExpense) {
     const storedExpenses = [
-      {
-        expense: "Mortgage",
-        amount: 7000,
-      },
-      {
-        expense: "Repair",
-        amount: 400,
-      },
+      // {
+      //   expense: "Mortgage",
+      //   amount: 7000,
+      // },
+      // {
+      //   expense: "Repair",
+      //   amount: 400,
+      // },
     ];
+    storedExpenses.push(newExpense);
 
     storedExpenses.forEach((expense) => {
       UI.addSummary(expense);
@@ -37,13 +38,11 @@ class UI {
       0
     );
 
-    // UI.addExpense(storedExpenses);
     UI.addExpense(totalExpenses);
-    console.log(totalExpenses);
     UI.addBalance(totalExpenses);
   }
 
-  /* ==========addSummary========= */
+  /* ========== addSummary ========= */
   static addSummary(expense) {
     const tableBody = document.querySelector(".table-body");
     const tr = document.createElement("tr");
@@ -58,36 +57,42 @@ class UI {
     tableBody.appendChild(tr);
   }
 
-  /* ==========addBudget========= */
+  /* ========== addBudget ========= */
   static addBudget(budget = 0) {
     const walletSize = document.querySelector(".wallet-size");
-    walletSize.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${budget}`;
+    walletSize.innerHTML = `<i class="fa-solid fa-dollar-sign fa-sm"></i>${budget}`;
   }
 
-  /* ==========addExpense========= */
+  /* ========== addExpense ========= */
   static addExpense(totalExpenses = 0) {
     const walletOut = document.querySelector(".wallet-out");
-    walletOut.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${totalExpenses}`;
-    console.log(totalExpenses);
+    walletOut.innerHTML = `<i class="fa-solid fa-dollar-sign fa-sm"></i>${totalExpenses}`;
   }
 
-  /* ==========addBalance========= */
+  /* ========== addBalance ========= */
   static addBalance(totalExpenses = 0, budget = 0) {
     const balance = document.querySelector(".balance");
     const balanceDisplay = budget - totalExpenses;
-    balance.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${balanceDisplay}`;
+    balance.innerHTML = `<i class="fa-solid fa-dollar-sign fa-sm"></i>${balanceDisplay}`;
   }
-}
 
-/*
-================================================================================================================================
-Document Loaded Function
-================================================================================================================================
-*/
-function documentLoaded() {
-  UI.displayExpenses();
-  UI.addBudget();
-  UI.addBalance();
+  /* ========== Clear Fields ========= */
+  static clearFields() {
+    document.getElementById("budget").value = " ";
+    document.getElementById("expense").value = " ";
+    document.getElementById("amount").value = " ";
+  }
+
+  static alerts(message, type) {
+    const enterBudget = document.querySelector(".enter-budget");
+    const form = document.querySelector(".budget");
+
+    const div = document.createElement("div");
+    div.innerHTML = `<p class="alert alert-${type}">${message}</p>`;
+
+    enterBudget.insertBefore(div, form);
+    setTimeout(() => document.querySelector(".alert").remove(), 3000);
+  }
 }
 
 /*
@@ -95,19 +100,45 @@ function documentLoaded() {
 Document Load Event Listerner
 ================================================================================================================================
 */
-document.addEventListener("DOMContentLoaded", (e) => {
-  documentLoaded();
-});
+document.addEventListener("DOMContentLoaded", (e) => {});
 
 /*
 ================================================================================================================================
 Event Listeners
 ================================================================================================================================
 */
+/* ========== Budget form submit listener ========= */
 const budgetForm = document.querySelector(".budget");
 budgetForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const budget = document.getElementById("budget").value;
-  UI.addBudget(budget);
-  UI.addBalance(budget);
+
+  if (budget === " ") {
+    UI.alerts("Please Enter the budget", "error");
+  } else if (budget < 0) {
+    UI.alerts("The budget cannot be less than Zero", "error");
+  } else {
+    UI.addBudget(budget);
+    UI.addBalance(budget);
+    UI.clearFields();
+  }
+});
+
+/* ========== Expense form submit listener ========= */
+const expenseForm = document.querySelector(".expense");
+expenseForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const expense = document.querySelector("#expense").value;
+  const amount = document.querySelector("#amount").value;
+  const amountNum = parseInt(amount);
+
+  if (expense === " " || amountNum === " ") {
+    UI.alerts("Please Enter all fields", "error");
+  } else if (amount < 0) {
+    UI.alerts("The amount cannot be less than 0", "error");
+  } else {
+    const newExpense = new Summary(expense, amountNum);
+    UI.displayExpenses(newExpense);
+    UI.clearFields();
+  }
 });
